@@ -56,6 +56,11 @@ The use of MoqAssist is straightforward as explained in the following;
 
 ## Sample
 
+| :zap:  In the sample, there were *ProductService*, *CategoryService* and *UserService*, and product service depends others.|
+|-----------------------------------------|
+
+###  1- The Use of MoqAssistDictionary
+
  * Firstly, create a unit test project. It might be any unit test framework of .NET platforms. In the examples of MoqAssist, xUnit was used.
  * Then, create a class inherited from MoqAssistDictionary to register the mocked objects.
  * Override the *RegisterMocks()* method.
@@ -87,6 +92,143 @@ KeyValuePair<string, object> GetMockPair<T>();
 ```
 * In addition, MoqAssistDictionary offers a couple of methods for searching and validation. 
 * For the *Key-Value Pairs*, the key represents the full name of the object and the value represents the mocked object.
+
+
+| :zap:  Now, the system is ready for testing. Create a test file and decide which class needs to be tested!|
+|-----------------------------------------|
+
+
+###  2- The Use of MoqAssist
+
+ * Here, declare the MoqAssist with a given class for testing.
+ * Also, declare the original class which operates the real business with mock dependencies.
+ 
+```csharp
+private MoqAssist<ProductService> _productService { get; set; }
+private IProductService _productServiceInstance { get; set; }
+```
+ 
+ * Construct the MoqAssist with a dictionary with registered mock objects.
+ 
+```csharp
+_productService = MoqAssist<ProductService>.Construct(new DefaultMockDictionary());
+```
+
+ * Get the automatically mocked constructor that needs to tested. The order of constructors are preserved by MoqAssist.
+ 
+ ```csharp
+_productServiceInstance = _productService.GetConstructors()[0];
+```
+
+ * Get mock objects for any setup operations, if needed.
+ 
+```csharp
+_userServiceMock = _productService.GetMock<IUserService>();
+_categoryServiceMock = _productService.GetMock<ICategoryService>();
+```
+
+* At the end, the code seems as follows;
+
+```csharp
+public class ProductServiceTests : IDisposable
+{
+   private MoqAssist<ProductService> _productService { get; set; }
+   private IProductService _productServiceInstance { get; set; }
+
+   private Mock<IUserService> _userServiceMock { get; set; }
+   private Mock<ICategoryService> _categoryServiceMock { get; set; } 
+   
+   public ProductServiceTests()
+   {
+        _productService = MoqAssist<ProductService>.Construct(new DefaultMockDictionary());
+        _productServiceInstance = _productService.GetConstructors()[0];
+
+        _userServiceMock = _productService.GetMock<IUserService>();
+        _categoryServiceMock = _productService.GetMock<ICategoryService>();
+    }
+
+     public void Dispose()
+     {
+         _productService = null;
+         _productServiceInstance = null;
+
+         _userServiceMock = null;
+         _categoryServiceMock = null;
+     }     
+ }  
+```
+
+* In order to write a test, sample scenarios as follows;
+
+```csharp
+namespace MoqAssist.UnitTests.Tests
+{
+
+    public class ProductServiceTests : IDisposable
+    {
+        private MoqAssist<ProductService> _productService { get; set; }
+        private IProductService _productServiceInstance { get; set; }
+
+        private Mock<IUserService> _userServiceMock { get; set; }
+        private Mock<ICategoryService> _categoryServiceMock { get; set; }
+
+        public ProductServiceTests()
+        {
+            _productService = MoqAssist<ProductService>.Construct(new DefaultMockDictionary());
+            _productServiceInstance = _productService.GetConstructors()[0];
+
+            _userServiceMock = _productService.GetMock<IUserService>();
+            _categoryServiceMock = _productService.GetMock<ICategoryService>();
+        }
+
+        public void Dispose()
+        {
+            _productService = null;
+            _productServiceInstance = null;
+
+            _userServiceMock = null;
+            _categoryServiceMock = null;
+        }
+
+        [Theory]
+        [InlineData("Test Product", 100.50, 25, 1, 3)]
+        [InlineData("Test Product 2", 25, 2, 4, 9)]
+        public void Create_Should_Return_True_When_Process_Successfull(string productName, decimal price, int stock, int userId, int categoryId)
+        {
+            _userServiceMock.Setup(x => x.GetById(userId)).Returns(new User() { Id = userId });
+            _categoryServiceMock.Setup(x => x.GetById(categoryId)).Returns(new Category() { Id = categoryId });
+
+            var response = _productServiceInstance.Create(productName, price, stock, userId, categoryId);
+            Assert.True(response == true);
+        }
+
+        [Theory]
+        [InlineData("Test Product", 100.50, 25, 1, 3)]
+        [InlineData("Test Product 2", 25, 2, 4, 9)]
+        public void Create_Should_Return_False_When_Category_Null(string productName, decimal price, int stock, int userId, int categoryId)
+        {
+            _userServiceMock.Setup(x => x.GetById(userId)).Returns(new User() { Id = userId });
+            _categoryServiceMock.Setup(x => x.GetById(categoryId)).Returns<Category>(null);
+
+            var response = _productServiceInstance.Create(productName, price, stock, userId, categoryId);
+            Assert.True(response == false);
+        }
+
+        [Theory]
+        [InlineData("Test Product", 100.50, 25, 1, 3)]
+        [InlineData("Test Product 2", 25, 2, 4, 9)]
+        public void Create_Should_Return_False_When_User_Null(string productName, decimal price, int stock, int userId, int categoryId)
+        {
+            _userServiceMock.Setup(x => x.GetById(userId)).Returns<User>(null);
+            _categoryServiceMock.Setup(x => x.GetById(categoryId)).Returns(new Category() { Id = categoryId });
+
+            var response = _productServiceInstance.Create(productName, price, stock, userId, categoryId);
+            Assert.True(response == false);
+        }
+    }
+}  
+```
+
 
 
 ## Technologies
