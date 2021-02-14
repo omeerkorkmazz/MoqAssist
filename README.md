@@ -20,7 +20,7 @@
   </a> 
   
   <a href="https://github.com/omeerkorkmazz/MoqAssist/stargazers/">
-    <img src="https://img.shields.io/github/stars/omeerkorkmazz/MoqAssist.svg?style=social&label=Star&maxAge=2592000">
+    <img src="https://img.shields.io/github/stars/omeerkorkmazz/MoqAssist?style=social">
   </a> 
 </p>
 
