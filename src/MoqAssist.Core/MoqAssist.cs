@@ -5,8 +5,12 @@ using Moq;
 using MoqAssist.Core.Dictionary;
 using MoqAssist.Core.Exceptions;
 
+// CREATED BY OMER KORKMAZ
+// 14.02.2021 14:20
+
 namespace MoqAssist.Core
 {
+    ///<summary>A lightweight Mocking Assistant for Moq Library.</summary>
     public class MoqAssist<T> where T : class
     {
         private List<T> _instances { get; set; }
@@ -19,12 +23,12 @@ namespace MoqAssist.Core
         {
             _constructorMocks = new Dictionary<string, object>();
             _mockObjectsDictionary = dictionary;
-            _instances = getInstances();
+            _instances = getConstructors();
         }
         #endregion
 
         #region Methods
-        private List<T> getInstances()
+        private List<T> getConstructors()
         {
             var constructorList = new List<T>();
 
@@ -45,7 +49,14 @@ namespace MoqAssist.Core
             }
             return constructorList;
         }
-        public List<T> GetInstances() => _instances;
+
+        ///<summary>Gets all constructors of a given T object with mocked dependencies sequentially</summary>
+        ///<returns>List of T with the sequential constructors</returns>
+        public List<T> GetConstructors() => _instances;
+
+        ///<summary>Gets a given TObject as mocked by checking from the dictionary</summary>
+        ///<exception cref="MockObjectNotFoundException">Thrown when mocked object not found in the dictionary.</exception>
+        ///<returns>Mock of a given TObject where TObject is a class</returns>
         public Mock<TObject> GetMock<TObject>() where TObject : class
         {
             var fullName = typeof(TObject).FullName;
@@ -54,11 +65,14 @@ namespace MoqAssist.Core
             var mockedObject = _constructorMocks.FirstOrDefault(x => x.Key == fullName);
             return (Mock<TObject>)mockedObject.Value;
         }
+
+        ///<summary>Gives the dictionary including all mocked objects registered by MoqAssistDictionary</summary>
         public MoqAssistDictionary MockDictionary() => _mockObjectsDictionary;
 
         #endregion
 
         #region Creators
+        ///<summary>Provides an instance of MoqAssist with a given MoqAssistDictionary</summary>
         public static MoqAssist<T> Construct(MoqAssistDictionary dictionary) => new MoqAssist<T>(dictionary);
 
         #endregion
