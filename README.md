@@ -45,9 +45,9 @@
 </p>
 
 ## About
-**MoqAssist** is a lightweight and simple mocking assistant used by developers writing unit tests in **.NET platforms** with **Moq** library. Basically, the main purpose is to provide developers to write tests more easily and quickly.
+**MoqAssist** is a lightweight and simple mocking assistant used by developers writing unit tests in **.NET platforms** with **Moq** library. Basically, the main purpose is to provide developers to write tests more easily and quickly without fighting with details.
 
-What MoqAssist does is that once registering objects (e.g., dependencies or candidate classes for testing), MoqAssist automatically builds the constructors of classes by using its dictionary that includes the mocking objects so that a developer does not have to manage the dependencies.
+What MoqAssist does is that once registering objects (e.g., dependencies or candidate classes for testing) into the dictionary managed by **MoqAssistDictionary**, MoqAssist automatically builds the constructors of classes by using its dictionary that includes the mocking objects so that a developer does not have to manage the dependencies.
 
 The use of MoqAssist is straightforward as explained in the following;
 * Register the objects wanted to be tested only once via *MoqAssistDictionary*.
@@ -55,14 +55,39 @@ The use of MoqAssist is straightforward as explained in the following;
 * Ready for testing!
 
 ## Sample
-**MoqAssist** is a lightweight and simple mocking assistant used by developers writing unit tests in **.NET platforms** with **Moq** library. Basically, the main purpose is to provide developers to write tests more easily and quickly.
 
-What MoqAssist does is that once registering objects (e.g., dependencies or candidate classes for testing), MoqAssist automatically builds the constructors of classes by using its dictionary that includes the mocking objects so that a developer does not have to manage the dependencies.
+ * Firstly, create a unit test project. It might be any unit test framework of .NET platforms. In the examples of MoqAssist, xUnit was used.
+ * Then, create a class inherited from MoqAssistDictionary to register the mocked objects.
+ * Override the *RegisterMocks()* method.
 
-The use of MoqAssist is straightforward as explained in the following;
-* Register the objects wanted to be tested only once via *MoqAssistDictionary*.
-* Call MoqAssist defining which class will be tested.
-* Ready for testing!
+```csharp
+namespace MoqAssist.UnitTests.Tests.MockDictionary
+{
+    public class DefaultMockDictionary : MoqAssistDictionary
+    {
+        public override void RegisterMocks()
+        {
+            Register<IUserService>(new Mock<IUserService>());
+            Register<ICategoryService>(new Mock<ICategoryService>());
+        }
+    }
+}
+```
+
+* *DefaultMockDictionary* will be the once produced class with the registrations of the mocked objects.
+
+```csharp
+Register<T>(Mock<T> obj);
+```
+* Register method is used to store the mocked object into the dictionary.
+
+```csharp
+bool IsMockExist<T>();
+KeyValuePair<string, object> GetMockPair<T>();
+```
+* In addition, MoqAssistDictionary offers a couple of methods for searching and validation. 
+* For the *Key-Value Pairs*, the key represents the full name of the object and the value represents the mocked object.
+
 
 ## Technologies
 
