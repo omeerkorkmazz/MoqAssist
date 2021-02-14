@@ -21,12 +21,12 @@ namespace MoqAssist.UnitTests.Tests
 
         public ProductServiceTests()
         {
-            _productService = new MoqAssist<ProductService>(new MockObjectDictionary());
+            _productService = MoqAssist<ProductService>.Construct(new MockObjectDictionary());
             _productServiceInstance = _productService.GetInstances()[0];
 
             #region Mocks
-            _userServiceMock = _productService.GetMockObject<IUserService>();
-            _categoryServiceMock = _productService.GetMockObject<ICategoryService>();
+            _userServiceMock = _productService.GetMock<IUserService>();
+            _categoryServiceMock = _productService.GetMock<ICategoryService>();
             #endregion
         }
 

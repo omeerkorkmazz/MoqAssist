@@ -1,18 +1,16 @@
 using Moq;
-using MoqAssist.Core;
+using MoqAssist.Core.Dictionary;
 using MoqAssist.UnitTests.Business.Categories;
-using MoqAssist.UnitTests.Business.Products;
 using MoqAssist.UnitTests.Business.Users;
 
 namespace MoqAssist.UnitTests.Tests
 {
-    public class MockObjectDictionary : BaseMockDictionary
+    public class MockObjectDictionary : MoqAssistDictionary
     {
-        public override void LoadMockObjects()
+        public override void RegisterMockObjects()
         {
-            MockObjectDictionary.Add(typeof(IUserService).FullName, new Mock<IUserService>());
-            MockObjectDictionary.Add(typeof(ICategoryService).FullName, new Mock<ICategoryService>());
-            MockObjectDictionary.Add(typeof(IProductService).FullName, new Mock<ProductService>());
+            AddToDictionary<IUserService>(new Mock<IUserService>());
+            AddToDictionary<ICategoryService>(new Mock<ICategoryService>());
         }
     }
 }
