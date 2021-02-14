@@ -37,6 +37,7 @@
 
 <p align="center">
   <a href="#about">About</a> •
+  <a href="#sample">Sample</a> •
   <a href="#technologies">Techonologies</a> •
   <a href="#contribution">Contribution</a> •
   <a href="#authors">Authors</a> •
@@ -44,6 +45,16 @@
 </p>
 
 ## About
+**MoqAssist** is a lightweight and simple mocking assistant used by developers writing unit tests in **.NET platforms** with **Moq** library. Basically, the main purpose is to provide developers to write tests more easily and quickly.
+
+What MoqAssist does is that once registering objects (e.g., dependencies or candidate classes for testing), MoqAssist automatically builds the constructors of classes by using its dictionary that includes the mocking objects so that a developer does not have to manage the dependencies.
+
+The use of MoqAssist is straightforward as explained in the following;
+* Register the objects wanted to be tested only once via *MoqAssistDictionary*.
+* Call MoqAssist defining which class will be tested.
+* Ready for testing!
+
+## Sample
 **MoqAssist** is a lightweight and simple mocking assistant used by developers writing unit tests in **.NET platforms** with **Moq** library. Basically, the main purpose is to provide developers to write tests more easily and quickly.
 
 What MoqAssist does is that once registering objects (e.g., dependencies or candidate classes for testing), MoqAssist automatically builds the constructors of classes by using its dictionary that includes the mocking objects so that a developer does not have to manage the dependencies.
@@ -61,7 +72,7 @@ The use of MoqAssist is straightforward as explained in the following;
 
 
 ## Contribution
-Feel free to contact me for any questions, contributions, or ideas.
+Feel free to contact me for any questions, discussions, or ideas. [Send Email](mailto:omer.korkmaz.95@windowslive.com?subject=[GitHub]%20MoqAssist)
 
 **How to contribute**
 * Fork the repository
