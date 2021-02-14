@@ -37,7 +37,8 @@
 
 <p align="center">
   <a href="#about">About</a> •
-  <a href="#builtWith">Built With</a> •
+  <a href="#technologies">Techonologies</a> •
+  <a href="#contribution">Contribution</a> •
   <a href="#authors">Authors</a> •
   <a href="#license">License</a> 
 </p>
@@ -51,3 +52,29 @@ The use of MoqAssist is straightforward as explained in the following;
 * Register the objects wanted to be tested only once via *MoqAssistDictionary*.
 * Call MoqAssist defining which class will be tested.
 * Ready for testing!
+
+## Technologies
+
+* [Dotnet Core](https://dotnet.microsoft.com/) - version net5.0 - Used to implement MoqAssist and MoqAssistDictionary
+* [Moq](https://www.nuget.org/packages/Moq/) - version 4.16.0 - Used for mocking business logics.
+* [xUnit](https://xunit.net/) - version net5.0 - Used for sample tests.
+
+
+## Contribution
+Feel free to contact me for any questions, contributions, or ideas.
+
+**How to contribute**
+* Fork the repository
+* Create a feature branch
+* Commit the changes and push the branch
+* Create a new pull request
+
+
+## Authors
+
+* [**Omer KORKMAZ**](https://www.linkedin.com/in/omerkorkmazz/) - *[*@omeerkorkmazz*](https://www.github.com/omeerkorkmazz)*
+
+
+## License
+
+Distributed under the MIT License. See [LICENSE](https://github.com/omeerkorkmazz/MoqAssist/blob/master/LICENSE) for more information.
