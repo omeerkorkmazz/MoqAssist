@@ -56,7 +56,7 @@ The use of MoqAssist is straightforward as explained in the following;
 
 ## Sample
 
-| :zap:  In the sample, there were *ProductService*, *CategoryService* and *UserService*, and product service depends others.|
+| :zap:  In the sample, there are *ProductService*, *CategoryService* and *UserService*, and product service depends others.|
 |-----------------------------------------|
 
 ###  1- The Use of MoqAssistDictionary
@@ -79,7 +79,7 @@ namespace MoqAssist.UnitTests.Tests.MockDictionary
 }
 ```
 
-* *DefaultMockDictionary* will be the once produced class with the registrations of the mocked objects.
+* *DefaultMockDictionary* will be the once produced dictionary with the registrations of the mocked objects.
 
 ```csharp
 Register<T>(Mock<T> obj);
@@ -100,8 +100,8 @@ KeyValuePair<string, object> GetMockPair<T>();
 
 ###  2- The Use of MoqAssist
 
- * Here, declare the MoqAssist with a given class for testing.
- * Also, declare the original class which operates the real business with mock dependencies.
+ * Here, declare the MoqAssist with a given object for testing.
+ * Also, declare the original object which operates the real business with mock dependencies.
  
 ```csharp
 private MoqAssist<ProductService> _productService { get; set; }
