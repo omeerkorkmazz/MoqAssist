@@ -3,7 +3,7 @@
   <img src="https://user-images.githubusercontent.com/29013117/107876653-41bf9d00-6ed8-11eb-90b0-770dccce5964.png" width="200"></a>
 </h1>
 
-<h4 align="center">A lightweight Mocking Assistant for Moq library in .NET platforms!</h4>
+<h4 align="center">A Lightweight Mocking Assistant for Moq Library in .NET Platforms!</h4>
 
 
 <p align="center">
