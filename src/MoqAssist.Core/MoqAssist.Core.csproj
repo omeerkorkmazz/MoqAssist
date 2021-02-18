@@ -2,10 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageId>MoqAssist</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Omer Korkmaz</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>2021</Copyright>
+    <Title>A Lightweight Mocking Assistant for Moq Library in .NET Platforms!</Title>
+    <Description>A Lightweight Mocking Assistant for Moq Library in .NET Platforms!</Description>
+    <PackageProjectUrl>https://github.com/omeerkorkmazz/MoqAssist</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/omeerkorkmazz/MoqAssist</RepositoryUrl>
+    <PackageIcon>MoqAssist.png</PackageIcon>
+    <PackageTags>unittesting;moq;mocking;mockinghelper;moqhelper</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<NoPackageAnalysis>True</NoPackageAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.16.0" />
+    <None Include="..\..\MoqAssist.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
