@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>MoqAssist</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Omer Korkmaz</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>2021</Copyright>
@@ -15,7 +15,6 @@
     <PackageTags>unittesting;moq;mocking;mockinghelper;moqhelper</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-		<NoPackageAnalysis>True</NoPackageAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
