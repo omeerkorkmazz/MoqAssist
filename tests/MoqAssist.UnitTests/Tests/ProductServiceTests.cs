@@ -1,6 +1,7 @@
 using System;
 using Moq;
 using MoqAssist.Core;
+using MoqAssist.Core.Dictionary;
 using MoqAssist.UnitTests.Business.Categories;
 using MoqAssist.UnitTests.Business.Products;
 using MoqAssist.UnitTests.Business.Users;
@@ -14,6 +15,7 @@ namespace MoqAssist.UnitTests.Tests
     {
         private MoqAssist<ProductService> _productService { get; set; }
         private IProductService _productServiceInstance { get; set; }
+        private MoqAssistDictionary _mockDictionary => DictionaryBuilder.Default;
 
         #region Mocks
         private Mock<IUserService> _userServiceMock { get; set; }
@@ -22,7 +24,7 @@ namespace MoqAssist.UnitTests.Tests
 
         public ProductServiceTests()
         {
-            _productService = MoqAssist<ProductService>.Construct(DictionaryBuilder.Default);
+            _productService = MoqAssist<ProductService>.Construct(_mockDictionary);
             _productServiceInstance = _productService.GetConstructors()[0];
 
             #region Mocks

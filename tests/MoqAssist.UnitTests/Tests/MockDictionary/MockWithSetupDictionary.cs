@@ -15,7 +15,7 @@ namespace MoqAssist.UnitTests.Tests.MockDictionary
             Register<IUserService>(prepareUserServiceMock());
             Register<ICategoryService>(prepareCategoryServiceMock());
         }
-
+        
         private Mock<IUserService> prepareUserServiceMock()
         {
             var userServiceMock = new Mock<IUserService>();

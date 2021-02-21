@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Moq;
 using MoqAssist.Core.Exceptions;
 
@@ -11,12 +13,12 @@ namespace MoqAssist.Core.Dictionary
     ///<summary>Dictionary Assistant to register mock objects once and use them in the unit tests</summary>
     public abstract class MoqAssistDictionary : IMockDictionary
     {
-        private Dictionary<string, object> _mockObjectsDictionary { get; set; }
+        private Dictionary<string, Lazy<object>> _mockObjectsDictionary { get; set; }
 
         #region Constructor
         protected MoqAssistDictionary()
         {
-            _mockObjectsDictionary = new Dictionary<string, object>();
+            _mockObjectsDictionary = new Dictionary<string, Lazy<object>>();
             RegisterMocks();
         }
         #endregion
@@ -27,23 +29,17 @@ namespace MoqAssist.Core.Dictionary
         #region Methods
 
         ///<summary>Registers a given T object as mocked into dictionary</summary>
-        public void Register<T>(Mock<T> mockedObject) where T : class => _mockObjectsDictionary.Add(typeof(T).FullName, mockedObject);
-        
+        public void Register<T>(Mock<T> mockedObject) where T : class
+        {
+            if (IsMockExist<T>()) throw new MockObjectAlreadyRegisteredException($"{typeof(T).FullName} has already registered in the mock dictionary!");
+            _mockObjectsDictionary.Add(typeof(T).FullName, new Lazy<object>(() => mockedObject, LazyThreadSafetyMode.PublicationOnly));
+        }
+
         ///<summary>Checks whether a given T object as mocked exists in the dictionary or not</summary>
         ///<returns>Boolean</returns>
         public bool IsMockExist<T>() where T : class => _mockObjectsDictionary.Any(x => x.Key == typeof(T).FullName);
         internal bool IsMockExist(string key) => _mockObjectsDictionary.Any(x => x.Key == key);
-
-        ///<summary>Gets a given T object as mocked by checking from the dictionary</summary>
-        ///<exception cref="MockObjectNotFoundException">Thrown when mocked object not found in the dictionary.</exception>
-        ///<returns>Key-Value Pair (Key = Full Name of T, Value = Mock of T)</returns>
-        public KeyValuePair<string, object> GetMockPair<T>() where T : class
-        {
-            var fullName = typeof(T).FullName;
-            if (!IsMockExist<T>()) throw new MockObjectNotFoundException($"{fullName} could not found in the mock dictionary!");
-            return _mockObjectsDictionary.FirstOrDefault(x => x.Key == fullName);
-        }
-        internal KeyValuePair<string, object> GetByKey(string key)
+        internal KeyValuePair<string, Lazy<object>> GetByKey(string key)
         {
             if (!IsMockExist(key)) throw new MockObjectNotFoundException($"{key} could not found in the mock dictionary!");
             return _mockObjectsDictionary.FirstOrDefault(x => x.Key == key);

@@ -6,6 +6,5 @@ namespace MoqAssist.UnitTests.Tests.MockDictionary
     {
         public static MoqAssistDictionary Default => new DefaultMockDictionary();
         public static MoqAssistDictionary MockWithSetup => new MockWithSetupDictionary();
-        
     }
 }
