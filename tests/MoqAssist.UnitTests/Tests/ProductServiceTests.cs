@@ -35,9 +35,6 @@ namespace MoqAssist.UnitTests.Tests
 
         public void Dispose()
         {
-            _productService = null;
-            _productServiceInstance = null;
-
             _userServiceMock = null;
             _categoryServiceMock = null;
         }
