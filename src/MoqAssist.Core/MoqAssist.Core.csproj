@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>MoqAssist</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Authors>Omer Korkmaz</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>2021</Copyright>
@@ -14,6 +14,7 @@
     <PackageIcon>MoqAssist.png</PackageIcon>
     <PackageTags>unittesting;moq;mocking;mockinghelper;moqhelper</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>Performance Improvements: Lazy Loading implemented for the MoqAssist Dictionary.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
