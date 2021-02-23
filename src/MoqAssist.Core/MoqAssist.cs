@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using Moq;
 using MoqAssist.Core.Dictionary;
 using MoqAssist.Core.Exceptions;
@@ -14,14 +14,14 @@ namespace MoqAssist.Core
     public class MoqAssist<T> where T : class
     {
         private List<T> _instances { get; set; }
-        private Dictionary<string, object> _constructorMocks { get; set; }
+        private Dictionary<string, Lazy<object>> _constructorMocks { get; set; }
         private MoqAssistDictionary _mockObjectsDictionary { get; set; }
 
 
         #region Constructor
         internal MoqAssist(MoqAssistDictionary dictionary)
         {
-            _constructorMocks = new Dictionary<string, object>();
+            _constructorMocks = new Dictionary<string, Lazy<object>>();
             _mockObjectsDictionary = dictionary;
             _instances = getConstructors();
         }
@@ -43,7 +43,7 @@ namespace MoqAssist.Core
                     var ctxParam = _mockObjectsDictionary.GetByKey(constructorParams[i].ParameterType.FullName);
                     var isCtxParamExist = _constructorMocks.Any(x => x.Key == ctxParam.Key);
                     if (!isCtxParamExist) _constructorMocks.Add(ctxParam.Key, ctxParam.Value);
-                    args[i] = ((Mock)ctxParam.Value).Object;
+                    args[i] = ((Mock)ctxParam.Value.Value).Object;
                 }
                 constructorList.Add((T)Activator.CreateInstance(type, args));
             }
@@ -63,7 +63,7 @@ namespace MoqAssist.Core
             if (!_constructorMocks.Any(x => x.Key == fullName)) throw new MockObjectNotFoundException($"{fullName} could not found in the mock dictionary!");
 
             var mockedObject = _constructorMocks.FirstOrDefault(x => x.Key == fullName);
-            return (Mock<TObject>)mockedObject.Value;
+            return (Mock<TObject>)mockedObject.Value.Value;
         }
 
         ///<summary>Gives the dictionary including all mocked objects registered by MoqAssistDictionary</summary>
